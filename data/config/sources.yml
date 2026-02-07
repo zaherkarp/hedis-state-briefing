@@ -1,0 +1,113 @@
+# Pinned sources for public datasets.
+# Update URLs annually (CMS) and when source files refresh.
+
+onc:
+  enabled: false
+  description: ONC / ASTP Health IT Dashboard (EHR adoption + interoperability proxies)
+  files:
+    - id: basic_ehr_by_state
+      url: https://dashboard.healthit.gov/datadashboard/data/basic_ehr_by_state.csv
+      filename: onc_basic_ehr_by_state.csv
+      format: csv
+      notes: "State-level EHR adoption snapshot (legacy dataset)."
+    - id: surescripts_erx_state
+      url: https://dashboard.healthit.gov/datadashboard/data/Surescripts_04-2014_State.csv
+      filename: onc_surescripts_erx_state.csv
+      format: csv
+      notes: "eRx adoption by state (Surescripts, legacy)."
+    - id: market_readiness_hospitals_clinicians
+      url: https://dashboard.healthit.gov/datadashboard/data/2015-edition-market-readiness-hospitals-clinicians-data.csv
+      filename: onc_market_readiness.csv
+      format: csv
+      notes: "2015 Edition market readiness indicators (legacy)."
+
+onc_api:
+  enabled: false
+  description: ONC Health IT Dashboard Open API (per-state pulls)
+  files:
+    - id: basic_ehr_by_state_api
+      api_base: https://dashboard.healthit.gov/api/open-api.php
+      source: https://dashboard.healthit.gov/datadashboard/data/basic_ehr_by_state.csv
+      filename: onc_basic_ehr_by_state_api.csv
+      format: csv
+      states:
+        - Wisconsin
+        - Maryland
+        - New York
+      state_params: ["State", "state"]
+      notes: "Per-state API pull for EHR adoption signals."
+    - id: surescripts_erx_state_api
+      api_base: https://dashboard.healthit.gov/api/open-api.php
+      source: https://dashboard.healthit.gov/datadashboard/data/Surescripts_04-2014_State.csv
+      filename: onc_surescripts_erx_state_api.csv
+      format: csv
+      states:
+        - Wisconsin
+        - Maryland
+        - New York
+      state_params: ["State", "state"]
+      notes: "Per-state API pull for eRx proxy signals."
+
+cms:
+  enabled: false
+  description: CMS MA / Part D enrollment and Stars summary tables
+  files:
+    - id: star_ratings_data_tables_2026
+      url: https://www.cms.gov/files/zip/2026-star-ratings-data-tables.zip
+      filename: cms_star_ratings_data_tables_2026.zip
+      format: zip
+      notes: "Star Ratings Data Tables (ZIP). Update annually."
+    - id: star_ratings_data_tables_2025
+      url: https://www.cms.gov/files/zip/2025-star-ratings-data-tables.zip
+      filename: cms_star_ratings_data_tables_2025.zip
+      format: zip
+      notes: "Prior year Star Ratings Data Tables (ZIP)."
+    - id: star_ratings_cutpoints
+      url: https://www.cms.gov/files/document/updated-2024-star-ratings-cutpoints-and-star-averages.xlsx
+      filename: cms_star_cutpoints_2024.xlsx
+      format: xlsx
+      notes: "Cutpoints / star averages (optional reference)."
+    - id: ma_enrollment_state_county_contract
+      url: https://www.cms.gov/files/zip/ma-enrollment-state-county-contract-december-2025-full-version.zip
+      filename: cms_ma_enrollment_scc_2025_12.zip
+      format: zip
+      notes: "Monthly MA enrollment by state/county/contract (full version). Update monthly."
+    - id: pdp_enrollment_state_county_contract
+      url: https://www.cms.gov/files/zip/pdp-enrollment-state-county-contract-december-2025-full-version.zip
+      filename: cms_pdp_enrollment_scc_2025_12.zip
+      format: zip
+      notes: "Monthly PDP enrollment by state/county/contract (full version). Update monthly."
+    - id: enrollment_cpsc
+      url: https://www.cms.gov/files/zip/monthly-enrollment-cpsc-december-2025.zip
+      filename: cms_enrollment_cpsc_2025_12.zip
+      format: zip
+      notes: "Monthly enrollment by contract/plan/state/county (all types). Optional."
+    - id: ma_enrollment_state_county_plan
+      url: https://www.cms.gov/files/zip/ma-enrollment-state-county-plan-december-2025.zip
+      filename: cms_ma_enrollment_scp_2025_12.zip
+      format: zip
+      notes: "Monthly MA enrollment by state/county/plan type (optional mix detail)."
+    - id: pdp_enrollment_state_county_plan
+      url: https://www.cms.gov/files/zip/pdp-enrollment-state-county-plan-december-2025.zip
+      filename: cms_pdp_enrollment_scp_2025_12.zip
+      format: zip
+      notes: "Monthly PDP enrollment by state/county/plan type (optional mix detail)."
+
+ruca:
+  enabled: false
+  description: USDA ERS RUCA rural-urban classification
+  files:
+    - id: ruca_zip_2020
+      url: https://ers.usda.gov/sites/default/files/_laserfiche/DataFiles/53241/RUCA-codes-2020-zipcode.csv?v=32088
+      filename: ruca_zip_2020.csv
+      format: csv
+      notes: "2020 RUCA ZIP code file."
+
+census:
+  enabled: false
+  description: Optional population context
+  files:
+    - id: population
+      url: REPLACE_ME
+      filename: census_population.csv
+      format: csv

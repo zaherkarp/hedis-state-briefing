@@ -1,0 +1,4 @@
+state,reporting_year,mapd_enrollment,ma_only_enrollment,ma_total_enrollment,pdp_enrollment,mapd_share_pct,ma_only_share_pct,pdp_share_pct,split_method
+CA,2024,2600000,,2600000,600000,81.2,,18.8,ma_vs_pdp
+IA,2024,120000,,120000,80000,60.0,,40.0,ma_vs_pdp
+FL,2024,1500000,,1500000,500000,75.0,,25.0,ma_vs_pdp

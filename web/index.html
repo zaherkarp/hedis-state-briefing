@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stars / HEDIS State Briefing Wall</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <div class="brand">
+          <div class="brand-title">Stars / HEDIS State Briefing Wall</div>
+          <div class="brand-subtitle">ECDS + Pre-Season Shift</div>
+        </div>
+        <div class="controls">
+          <label for="state-select">State</label>
+          <select id="state-select"></select>
+          <div class="updated" id="updated-at"></div>
+        </div>
+      </header>
+
+      <nav class="section-nav">
+        <a href="#headline">Overview</a>
+        <a href="#digital-readiness">Digital Readiness</a>
+        <a href="#rural-urban">Rural vs Urban</a>
+        <a href="#mapd-pdp">MAPD vs PDP</a>
+        <a href="#roles">Role Disruption</a>
+        <a href="#preseason">Pre-Season Shift</a>
+        <a href="#stars-context">Stars Context</a>
+      </nav>
+
+      <main id="wall">
+        <section id="headline" class="panel">
+          <h2>What is changing in Stars / HEDIS here</h2>
+          <p class="headline" id="headline-text">Loading state briefing...</p>
+          <p class="subheadline" id="subheadline-text"></p>
+          <ul class="bullet-list" id="headline-points"></ul>
+        </section>
+
+        <section id="digital-readiness" class="panel">
+          <div class="section-header">
+            <h2>Digital readiness context</h2>
+            <p class="section-note">ONC indicators act as a proxy for ECDS feasibility.</p>
+          </div>
+          <div class="metric-grid">
+            <div class="metric">
+              <div class="metric-label">Readiness score</div>
+              <div class="metric-value" id="readiness-score"></div>
+              <div class="metric-sub" id="readiness-label"></div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">EHR adoption</div>
+              <div class="metric-value" id="ehr-adoption"></div>
+              <div class="metric-sub">Hospitals with certified EHRs</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">HIE exchange</div>
+              <div class="metric-value" id="hie-exchange"></div>
+              <div class="metric-sub">Active clinical exchange</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">API utilization</div>
+              <div class="metric-value" id="api-use"></div>
+              <div class="metric-sub">Patient access signals</div>
+            </div>
+          </div>
+          <div class="callout" id="digital-insight"></div>
+        </section>
+
+        <section id="rural-urban" class="panel">
+          <div class="section-header">
+            <h2>Rural vs urban structural constraints</h2>
+            <p class="section-note">RUCA classification shows how geography changes operational risk.</p>
+          </div>
+          <div class="metric-grid">
+            <div class="metric">
+              <div class="metric-label">Rural population</div>
+              <div class="metric-value" id="rural-pct"></div>
+              <div class="metric-sub" id="rural-label"></div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Urban population</div>
+              <div class="metric-value" id="urban-pct"></div>
+              <div class="metric-sub">Remaining population share</div>
+            </div>
+          </div>
+          <div class="split-columns">
+            <div>
+              <h3>Constraints</h3>
+              <ul class="bullet-list" id="rural-constraints"></ul>
+            </div>
+            <div>
+              <h3>Implications</h3>
+              <ul class="bullet-list" id="rural-implications"></ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="mapd-pdp" class="panel">
+          <div class="section-header">
+            <h2>MAPD vs PDP operational split</h2>
+            <p class="section-note">Plan mix shapes where Stars pressure concentrates.</p>
+          </div>
+          <div class="metric-grid">
+            <div class="metric">
+              <div class="metric-label">MAPD share</div>
+              <div class="metric-value" id="mapd-share"></div>
+              <div class="metric-sub" id="mapd-label"></div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">MA-only share</div>
+              <div class="metric-value" id="ma-only-share"></div>
+              <div class="metric-sub">MA without Part D</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">PDP share</div>
+              <div class="metric-value" id="pdp-share"></div>
+              <div class="metric-sub">Share of Part D enrollment</div>
+            </div>
+          </div>
+          <div class="callout" id="mapd-implications"></div>
+          <div class="callout" id="plan-method-note"></div>
+        </section>
+
+        <section id="roles" class="panel">
+          <div class="section-header">
+            <h2>Which roles feel this most</h2>
+            <p class="section-note">Qualitative ranking based on operational load in pre-season.</p>
+          </div>
+          <p class="callout" id="roles-summary"></p>
+          <div class="role-list" id="roles-list"></div>
+        </section>
+
+        <section id="preseason" class="panel">
+          <div class="section-header">
+            <h2>Pre-season before vs after ECDS</h2>
+            <p class="section-note">Operational timing shifts earlier and gets heavier.</p>
+          </div>
+          <div class="split-columns">
+            <div>
+              <h3>Before ECDS</h3>
+              <ul class="bullet-list" id="preseason-before"></ul>
+            </div>
+            <div>
+              <h3>After ECDS</h3>
+              <ul class="bullet-list" id="preseason-after"></ul>
+            </div>
+          </div>
+          <div>
+            <h3>Operational risks</h3>
+            <ul class="bullet-list" id="preseason-risks"></ul>
+          </div>
+        </section>
+
+        <section id="stars-context" class="panel">
+          <div class="section-header">
+            <h2>CMS Stars context</h2>
+            <p class="section-note">Enrollment scale and volatility define exposure.</p>
+          </div>
+          <div class="metric-grid">
+            <div class="metric">
+              <div class="metric-label">MA enrollment</div>
+              <div class="metric-value" id="ma-enrollment"></div>
+              <div class="metric-sub">Medicare Advantage lives</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Part D enrollment</div>
+              <div class="metric-value" id="partd-enrollment"></div>
+              <div class="metric-sub">Prescription drug lives</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Average star</div>
+              <div class="metric-value" id="avg-star"></div>
+              <div class="metric-sub" id="volatility-label"></div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Contract churn</div>
+              <div class="metric-value" id="churn-pct"></div>
+              <div class="metric-sub">Annual churn estimate</div>
+            </div>
+          </div>
+          <ul class="bullet-list" id="stars-notes"></ul>
+        </section>
+
+        <section class="panel">
+          <details>
+            <summary>Data sources and method notes</summary>
+            <div class="details-grid">
+              <div>
+                <h3>Sources</h3>
+                <ul class="bullet-list" id="source-list"></ul>
+              </div>
+              <div>
+                <h3>Designed for extension</h3>
+                <p>
+                  This wall is structured so future interview data and organization profiles
+                  can be attached per state without rewriting the UI.
+                </p>
+              </div>
+            </div>
+          </details>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

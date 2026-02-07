@@ -1,0 +1,4 @@
+state,reporting_year,ehr_adoption_pct,hie_exchange_pct,patient_access_pct,tefca_ready_pct,api_use_pct,readiness_score
+CA,2024,91.0,,,,58.0,74.5
+FL,2024,89.0,,,,46.0,67.5
+IA,2024,86.0,,,,39.0,62.5

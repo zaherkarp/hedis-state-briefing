@@ -1,0 +1,35 @@
+# Default role impact ranking (qualitative). Override per state as needed.
+# Impact values: High, Medium, Low
+
+defaults:
+  - role: Data Engineering
+    impact: High
+    why: ECDS pipelines, validation, and cross-system data stitching increase workload.
+  - role: Quality Assurance
+    impact: High
+    why: Measure logic changes and new test cases expand QA cycles pre-season.
+  - role: Measure Owners
+    impact: High
+    why: Measure stewardship shifts earlier with more upstream dependencies.
+  - role: Analytics
+    impact: Medium
+    why: Reporting timelines move forward and require faster iteration.
+  - role: Provider Engagement
+    impact: Medium
+    why: Outreach sequencing changes to align with earlier data cutoffs.
+  - role: Operations Leadership
+    impact: Medium
+    why: Cross-team coordination and resourcing decisions intensify.
+
+state_overrides:
+  IA:
+    - role: Data Engineering
+      impact: High
+      why: Rural connectivity gaps increase interface variance and data gaps.
+    - role: Provider Engagement
+      impact: High
+      why: Rural clinic adoption variability increases education burden.
+  FL:
+    - role: Quality Assurance
+      impact: High
+      why: High contract churn elevates audit and revalidation load.

@@ -1,0 +1,128 @@
+{
+  "state": {
+    "code": "CA",
+    "name": "California"
+  },
+  "updated_at": "2026-02-07",
+  "summary": {
+    "headline": "Higher readiness for ECDS in California with a urban-heavy operating context.",
+    "subheadline": "Pre-season work shifts earlier with heavier data validation and cross-team coordination.",
+    "key_points": [
+      "Strong digital readiness allows earlier ECDS pilots and QA cycles.",
+      "Urban-heavy footprint supports faster data iteration but higher volume risk.",
+      "MA performance will drive most Stars exposure in this state."
+    ]
+  },
+  "digital_readiness": {
+    "reporting_year": "2024",
+    "readiness_score": 74.5,
+    "readiness_label": "Higher readiness",
+    "ehr_adoption_pct": 91.0,
+    "hie_exchange_pct": null,
+    "patient_access_pct": null,
+    "tefca_ready_pct": null,
+    "api_use_pct": 58.0,
+    "insight": "ECDS readiness is driven by interoperability and patient access signals."
+  },
+  "rural_urban": {
+    "rural_pct": 10.2,
+    "urban_pct": 89.8,
+    "label": "Urban-heavy",
+    "constraints": [
+      "Staffing variability and connectivity gaps extend validation cycles.",
+      "Smaller clinics create higher variance in data completeness."
+    ],
+    "implications": [
+      "Phase pilots by network maturity, not just geography.",
+      "Plan extra enablement time for rural sites."
+    ]
+  },
+  "mapd_pdp": {
+    "mapd_share_pct": 81.2,
+    "ma_only_share_pct": null,
+    "pdp_share_pct": 18.8,
+    "label": "MA-dominant",
+    "split_method": "ma_vs_pdp",
+    "method_note": "MAPD vs MA-only split not available; MAPD share reflects total MA enrollment.",
+    "implications": [
+      "MA incentives will dominate the performance story when MA share is high.",
+      "PDP workflows remain critical when PDP share is material."
+    ]
+  },
+  "roles_impact": {
+    "summary": "Data engineering, QA, and measure owners carry the earliest burden.",
+    "roles": [
+      {
+        "role": "Data Engineering",
+        "impact": "High",
+        "why": "ECDS pipelines, validation, and cross-system data stitching increase workload."
+      },
+      {
+        "role": "Quality Assurance",
+        "impact": "High",
+        "why": "Measure logic changes and new test cases expand QA cycles pre-season."
+      },
+      {
+        "role": "Measure Owners",
+        "impact": "High",
+        "why": "Measure stewardship shifts earlier with more upstream dependencies."
+      },
+      {
+        "role": "Analytics",
+        "impact": "Medium",
+        "why": "Reporting timelines move forward and require faster iteration."
+      },
+      {
+        "role": "Provider Engagement",
+        "impact": "Medium",
+        "why": "Outreach sequencing changes to align with earlier data cutoffs."
+      },
+      {
+        "role": "Operations Leadership",
+        "impact": "Medium",
+        "why": "Cross-team coordination and resourcing decisions intensify."
+      }
+    ]
+  },
+  "preseason_shift": {
+    "before": [
+      "Late-fall data pulls with limited back-and-forth.",
+      "Measure owners validate after upstream extraction is mostly complete.",
+      "QA cycles run close to submission windows."
+    ],
+    "after": [
+      "Early-fall data readiness checks and ECDS validation rounds.",
+      "Measure logic alignment begins earlier with more dependencies.",
+      "QA cycles expand to cover new data interfaces and edge cases."
+    ],
+    "operational_risks": [
+      "Data quality issues surface earlier and require rapid remediation.",
+      "Capacity pinch for data engineering and QA during pre-season.",
+      "Higher coordination load across measure owners, analytics, and ops."
+    ]
+  },
+  "stars_context": {
+    "reporting_year": "2024",
+    "ma_enrollment": 3000000,
+    "partd_enrollment": 1200000,
+    "avg_star": 3.8,
+    "volatility_index": 0.32,
+    "volatility_label": "Moderate volatility",
+    "churn_pct": 7.2,
+    "notes": [
+      "Enrollment size and churn drive operational exposure.",
+      "Higher volatility signals more unstable contract performance."
+    ]
+  },
+  "sources": {
+    "onc": "ONC Health IT Dashboard",
+    "cms": "CMS MA/Part D",
+    "ruca": "USDA ERS RUCA",
+    "census": "Optional Census population context"
+  },
+  "future": {
+    "organizations": [],
+    "interviews": [],
+    "role_risk_scores": []
+  }
+}
