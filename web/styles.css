@@ -3,6 +3,7 @@
   --muted: #4d545b;
   --accent: #0b6d5c;
   --accent-2: #b56a1b;
+  --accent-red: #a3392b;
   --surface: #f7f2e8;
   --panel: #fff9ef;
   --border: #d8d0c2;
@@ -78,6 +79,12 @@ body {
   background: #fff;
   font-family: var(--sans);
   font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.controls select:hover {
+  border-color: var(--accent);
 }
 
 .updated {
@@ -85,13 +92,14 @@ body {
   font-size: 0.85rem;
 }
 
+/* Navigation */
 .section-nav {
   position: sticky;
   top: 96px;
   z-index: 10;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
   padding: 16px 0 12px;
   border-bottom: 1px solid var(--border);
   background: rgba(247, 242, 232, 0.88);
@@ -101,10 +109,11 @@ body {
 .section-nav a {
   text-decoration: none;
   color: var(--muted);
-  font-size: 0.9rem;
-  padding: 6px 10px;
+  font-size: 0.88rem;
+  padding: 6px 12px;
   border-radius: 999px;
   border: 1px solid transparent;
+  transition: all 0.2s ease;
 }
 
 .section-nav a:hover {
@@ -112,6 +121,13 @@ body {
   color: var(--accent);
 }
 
+.section-nav a.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Panels */
 .panel {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -119,6 +135,24 @@ body {
   padding: 28px 30px;
   margin: 26px 0;
   box-shadow: var(--shadow);
+}
+
+/* Fade transitions for state switching */
+#wall {
+  transition: opacity 0.15s ease;
+}
+
+#wall.fade-out {
+  opacity: 0;
+}
+
+#wall.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 h2 {
@@ -155,6 +189,7 @@ h3 {
   margin-top: 4px;
 }
 
+/* Metrics */
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -167,6 +202,11 @@ h3 {
   border-radius: 16px;
   padding: 16px;
   border: 1px solid #ece3d6;
+  transition: box-shadow 0.2s ease;
+}
+
+.metric:hover {
+  box-shadow: 0 4px 16px rgba(27, 27, 27, 0.06);
 }
 
 .metric-label {
@@ -178,6 +218,7 @@ h3 {
   font-size: 1.4rem;
   font-weight: 600;
   margin-top: 6px;
+  color: var(--accent);
 }
 
 .metric-sub {
@@ -209,6 +250,7 @@ h3 {
   gap: 20px;
 }
 
+/* Role cards */
 .role-list {
   display: grid;
   gap: 12px;
@@ -223,6 +265,23 @@ h3 {
   justify-content: space-between;
   align-items: baseline;
   gap: 16px;
+  transition: box-shadow 0.2s ease;
+}
+
+.role-card:hover {
+  box-shadow: 0 4px 16px rgba(27, 27, 27, 0.06);
+}
+
+.role-card.impact-high {
+  border-left: 4px solid var(--accent-red);
+}
+
+.role-card.impact-medium {
+  border-left: 4px solid var(--accent-2);
+}
+
+.role-card.impact-low {
+  border-left: 4px solid var(--border);
 }
 
 .role-name {
@@ -231,7 +290,25 @@ h3 {
 
 .role-impact {
   font-weight: 600;
+  font-size: 0.85rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.role-impact.impact-high {
+  color: var(--accent-red);
+  background: rgba(163, 57, 43, 0.08);
+}
+
+.role-impact.impact-medium {
   color: var(--accent-2);
+  background: rgba(181, 106, 27, 0.08);
+}
+
+.role-impact.impact-low {
+  color: var(--muted);
+  background: rgba(77, 84, 91, 0.06);
 }
 
 .role-why {
@@ -240,6 +317,7 @@ h3 {
   margin-top: 6px;
 }
 
+/* Sources */
 .details-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -253,6 +331,7 @@ summary {
   cursor: pointer;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .site-header {
     flex-direction: column;
@@ -265,5 +344,24 @@ summary {
 
   .section-nav {
     top: 156px;
+  }
+
+  .panel {
+    padding: 20px 18px;
+    border-radius: 16px;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .split-columns {
+    grid-template-columns: 1fr;
   }
 }

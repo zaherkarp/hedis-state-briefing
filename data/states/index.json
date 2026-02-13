@@ -3,18 +3,33 @@
     {
       "code": "CA",
       "name": "California",
-      "headline": "Higher readiness for ECDS in California with a urban-heavy operating context."
+      "headline": "Higher readiness for ECDS in California with an urban-heavy operating context."
     },
     {
       "code": "FL",
       "name": "Florida",
-      "headline": "Mixed readiness for ECDS in Florida with a urban-heavy operating context."
+      "headline": "Mixed readiness for ECDS in Florida with an urban-heavy operating context."
     },
     {
       "code": "IA",
       "name": "Iowa",
-      "headline": "Mixed readiness for ECDS in Iowa with a urban-heavy operating context."
+      "headline": "Mixed readiness for ECDS in Iowa with a mixed rural/urban operating context."
+    },
+    {
+      "code": "NY",
+      "name": "New York",
+      "headline": "Higher readiness for ECDS in New York with an urban-heavy operating context."
+    },
+    {
+      "code": "OH",
+      "name": "Ohio",
+      "headline": "Mixed readiness for ECDS in Ohio with an urban-heavy operating context."
+    },
+    {
+      "code": "TX",
+      "name": "Texas",
+      "headline": "Mixed readiness for ECDS in Texas with an urban-heavy operating context."
     }
   ],
-  "updated_at": "2026-02-07"
+  "updated_at": "2026-02-13"
 }

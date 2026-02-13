@@ -3,9 +3,9 @@
     "code": "CA",
     "name": "California"
   },
-  "updated_at": "2026-02-07",
+  "updated_at": "2026-02-13",
   "summary": {
-    "headline": "Higher readiness for ECDS in California with a urban-heavy operating context.",
+    "headline": "Higher readiness for ECDS in California with an urban-heavy operating context.",
     "subheadline": "Pre-season work shifts earlier with heavier data validation and cross-team coordination.",
     "key_points": [
       "Strong digital readiness allows earlier ECDS pilots and QA cycles.",
@@ -15,11 +15,11 @@
   },
   "digital_readiness": {
     "reporting_year": "2024",
-    "readiness_score": 74.5,
+    "readiness_score": 72.2,
     "readiness_label": "Higher readiness",
     "ehr_adoption_pct": 91.0,
-    "hie_exchange_pct": null,
-    "patient_access_pct": null,
+    "hie_exchange_pct": 72.0,
+    "patient_access_pct": 68.0,
     "tefca_ready_pct": null,
     "api_use_pct": 58.0,
     "insight": "ECDS readiness is driven by interoperability and patient access signals."

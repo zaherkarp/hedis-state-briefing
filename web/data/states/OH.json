@@ -1,11 +1,11 @@
 {
   "state": {
-    "code": "FL",
-    "name": "Florida"
+    "code": "OH",
+    "name": "Ohio"
   },
   "updated_at": "2026-02-13",
   "summary": {
-    "headline": "Mixed readiness for ECDS in Florida with an urban-heavy operating context.",
+    "headline": "Mixed readiness for ECDS in Ohio with an urban-heavy operating context.",
     "subheadline": "Pre-season work shifts earlier with heavier data validation and cross-team coordination.",
     "key_points": [
       "Readiness is uneven; target high-variance workflows first.",
@@ -15,18 +15,18 @@
   },
   "digital_readiness": {
     "reporting_year": "2024",
-    "readiness_score": 63.8,
+    "readiness_score": 67.5,
     "readiness_label": "Mixed readiness",
-    "ehr_adoption_pct": 89.0,
-    "hie_exchange_pct": 63.0,
-    "patient_access_pct": 57.0,
+    "ehr_adoption_pct": 90.0,
+    "hie_exchange_pct": 67.0,
+    "patient_access_pct": 61.0,
     "tefca_ready_pct": null,
-    "api_use_pct": 46.0,
+    "api_use_pct": 52.0,
     "insight": "ECDS readiness is driven by interoperability and patient access signals."
   },
   "rural_urban": {
-    "rural_pct": 2.0,
-    "urban_pct": 98.0,
+    "rural_pct": 1.4,
+    "urban_pct": 98.6,
     "label": "Urban-heavy",
     "constraints": [
       "Staffing variability and connectivity gaps extend validation cycles.",
@@ -38,9 +38,9 @@
     ]
   },
   "mapd_pdp": {
-    "mapd_share_pct": 75.0,
+    "mapd_share_pct": 73.9,
     "ma_only_share_pct": null,
-    "pdp_share_pct": 25.0,
+    "pdp_share_pct": 26.1,
     "label": "MA-dominant",
     "split_method": "ma_vs_pdp",
     "method_note": "MAPD vs MA-only split not available; MAPD share reflects total MA enrollment.",
@@ -60,7 +60,7 @@
       {
         "role": "Quality Assurance",
         "impact": "High",
-        "why": "High contract churn elevates audit and revalidation load."
+        "why": "Measure logic changes and new test cases expand QA cycles pre-season."
       },
       {
         "role": "Measure Owners",
@@ -103,12 +103,12 @@
   },
   "stars_context": {
     "reporting_year": "2024",
-    "ma_enrollment": 1900000,
-    "partd_enrollment": 1100000,
-    "avg_star": 3.6,
-    "volatility_index": 0.41,
-    "volatility_label": "Higher volatility",
-    "churn_pct": 9.5,
+    "ma_enrollment": 1100000,
+    "partd_enrollment": 700000,
+    "avg_star": 3.7,
+    "volatility_index": 0.35,
+    "volatility_label": "Moderate volatility",
+    "churn_pct": 7.8,
     "notes": [
       "Enrollment size and churn drive operational exposure.",
       "Higher volatility signals more unstable contract performance."

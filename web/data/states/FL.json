@@ -3,9 +3,9 @@
     "code": "FL",
     "name": "Florida"
   },
-  "updated_at": "2026-02-07",
+  "updated_at": "2026-02-13",
   "summary": {
-    "headline": "Mixed readiness for ECDS in Florida with a urban-heavy operating context.",
+    "headline": "Mixed readiness for ECDS in Florida with an urban-heavy operating context.",
     "subheadline": "Pre-season work shifts earlier with heavier data validation and cross-team coordination.",
     "key_points": [
       "Readiness is uneven; target high-variance workflows first.",
@@ -15,11 +15,11 @@
   },
   "digital_readiness": {
     "reporting_year": "2024",
-    "readiness_score": 67.5,
+    "readiness_score": 63.8,
     "readiness_label": "Mixed readiness",
     "ehr_adoption_pct": 89.0,
-    "hie_exchange_pct": null,
-    "patient_access_pct": null,
+    "hie_exchange_pct": 63.0,
+    "patient_access_pct": 57.0,
     "tefca_ready_pct": null,
     "api_use_pct": 46.0,
     "insight": "ECDS readiness is driven by interoperability and patient access signals."
@@ -53,9 +53,34 @@
     "summary": "Data engineering, QA, and measure owners carry the earliest burden.",
     "roles": [
       {
+        "role": "Data Engineering",
+        "impact": "High",
+        "why": "ECDS pipelines, validation, and cross-system data stitching increase workload."
+      },
+      {
         "role": "Quality Assurance",
         "impact": "High",
         "why": "High contract churn elevates audit and revalidation load."
+      },
+      {
+        "role": "Measure Owners",
+        "impact": "High",
+        "why": "Measure stewardship shifts earlier with more upstream dependencies."
+      },
+      {
+        "role": "Analytics",
+        "impact": "Medium",
+        "why": "Reporting timelines move forward and require faster iteration."
+      },
+      {
+        "role": "Provider Engagement",
+        "impact": "Medium",
+        "why": "Outreach sequencing changes to align with earlier data cutoffs."
+      },
+      {
+        "role": "Operations Leadership",
+        "impact": "Medium",
+        "why": "Cross-team coordination and resourcing decisions intensify."
       }
     ]
   },

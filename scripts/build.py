@@ -116,10 +116,21 @@ def load_roles(path: Path) -> Dict[str, Any]:
 
 
 def pick_roles(roles_config: Dict[str, Any], state: str) -> List[Dict[str, str]]:
+    defaults = roles_config.get("defaults", [])
     overrides = roles_config.get("state_overrides", {}).get(state)
-    if overrides:
-        return overrides
-    return roles_config.get("defaults", [])
+    if not overrides:
+        return defaults
+    override_map = {entry["role"]: entry for entry in overrides}
+    merged = []
+    for role in defaults:
+        if role["role"] in override_map:
+            merged.append(override_map[role["role"]])
+        else:
+            merged.append(role)
+    for entry in overrides:
+        if entry["role"] not in {r["role"] for r in defaults}:
+            merged.append(entry)
+    return merged
 
 
 def build_state_payload(
@@ -188,7 +199,8 @@ def build_state_payload(
     else:
         key_points.append("Plan mix unknown; confirm MAPD vs PDP exposure early.")
 
-    headline = f"{readiness} for ECDS in {name} with a {rural_mix.lower()} operating context."
+    article = "an" if rural_mix[0].lower() in "aeiou" else "a"
+    headline = f"{readiness} for ECDS in {name} with {article} {rural_mix.lower()} operating context."
     subheadline = "Pre-season work shifts earlier with heavier data validation and cross-team coordination."
 
     preseason_before = [
@@ -370,6 +382,8 @@ def main() -> None:
         web_states_dir = web_dir / "states"
         web_states_dir.mkdir(parents=True, exist_ok=True)
         for state_file in out_dir.glob("*.json"):
+            if state_file.name == "index.json":
+                continue
             target = web_states_dir / state_file.name
             target.write_bytes(state_file.read_bytes())
         (web_dir / "index.json").write_bytes((out_dir / "index.json").read_bytes())

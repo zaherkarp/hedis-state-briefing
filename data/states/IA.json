@@ -3,31 +3,31 @@
     "code": "IA",
     "name": "Iowa"
   },
-  "updated_at": "2026-02-07",
+  "updated_at": "2026-02-13",
   "summary": {
-    "headline": "Mixed readiness for ECDS in Iowa with a urban-heavy operating context.",
+    "headline": "Mixed readiness for ECDS in Iowa with a mixed rural/urban operating context.",
     "subheadline": "Pre-season work shifts earlier with heavier data validation and cross-team coordination.",
     "key_points": [
       "Readiness is uneven; target high-variance workflows first.",
-      "Urban-heavy footprint supports faster data iteration but higher volume risk.",
+      "Mixed rural/urban footprint requires dual-track enablement plans.",
       "Balanced MA/PDP mix requires parallel operational focus."
     ]
   },
   "digital_readiness": {
     "reporting_year": "2024",
-    "readiness_score": 62.5,
+    "readiness_score": 57.2,
     "readiness_label": "Mixed readiness",
     "ehr_adoption_pct": 86.0,
-    "hie_exchange_pct": null,
-    "patient_access_pct": null,
+    "hie_exchange_pct": 55.0,
+    "patient_access_pct": 49.0,
     "tefca_ready_pct": null,
     "api_use_pct": 39.0,
     "insight": "ECDS readiness is driven by interoperability and patient access signals."
   },
   "rural_urban": {
-    "rural_pct": 9.1,
-    "urban_pct": 90.9,
-    "label": "Urban-heavy",
+    "rural_pct": 25.6,
+    "urban_pct": 74.4,
+    "label": "Mixed rural/urban",
     "constraints": [
       "Staffing variability and connectivity gaps extend validation cycles.",
       "Smaller clinics create higher variance in data completeness."
@@ -58,9 +58,29 @@
         "why": "Rural connectivity gaps increase interface variance and data gaps."
       },
       {
+        "role": "Quality Assurance",
+        "impact": "High",
+        "why": "Measure logic changes and new test cases expand QA cycles pre-season."
+      },
+      {
+        "role": "Measure Owners",
+        "impact": "High",
+        "why": "Measure stewardship shifts earlier with more upstream dependencies."
+      },
+      {
+        "role": "Analytics",
+        "impact": "Medium",
+        "why": "Reporting timelines move forward and require faster iteration."
+      },
+      {
         "role": "Provider Engagement",
         "impact": "High",
         "why": "Rural clinic adoption variability increases education burden."
+      },
+      {
+        "role": "Operations Leadership",
+        "impact": "Medium",
+        "why": "Cross-team coordination and resourcing decisions intensify."
       }
     ]
   },

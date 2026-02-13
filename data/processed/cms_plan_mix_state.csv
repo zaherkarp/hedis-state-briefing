@@ -2,3 +2,6 @@ state,reporting_year,mapd_enrollment,ma_only_enrollment,ma_total_enrollment,pdp_
 CA,2024,2600000,,2600000,600000,81.2,,18.8,ma_vs_pdp
 IA,2024,120000,,120000,80000,60.0,,40.0,ma_vs_pdp
 FL,2024,1500000,,1500000,500000,75.0,,25.0,ma_vs_pdp
+TX,2024,1200000,,1200000,450000,72.7,,27.3,ma_vs_pdp
+NY,2024,1700000,,1700000,600000,73.9,,26.1,ma_vs_pdp
+OH,2024,850000,,850000,300000,73.9,,26.1,ma_vs_pdp

@@ -189,11 +189,28 @@ def process_onc(raw_dir: Path, out_dir: Path) -> None:
     api_ehr = read_csv(raw_dir / "onc_basic_ehr_by_state_api.csv")
     api_erx = read_csv(raw_dir / "onc_surescripts_erx_state_api.csv")
 
+    # Extract per-metric lookups from legacy CSV columns when available
+    hie_lookup: Dict[str, Dict[str, Optional[float]]] = {}
+    patient_access_lookup: Dict[str, Dict[str, Optional[float]]] = {}
+
     if legacy_ehr:
         ehr_lookup = extract_state_metric(
             legacy_ehr,
             ["state"],
             ["ehr_adoption_pct"],
+            ["reporting_year", "year", "period"],
+        )
+        # Legacy file may also carry hie_exchange_pct and patient_access_pct columns
+        hie_lookup = extract_state_metric(
+            legacy_ehr,
+            ["state"],
+            ["hie_exchange_pct"],
+            ["reporting_year", "year", "period"],
+        )
+        patient_access_lookup = extract_state_metric(
+            legacy_ehr,
+            ["state"],
+            ["patient_access_pct"],
             ["reporting_year", "year", "period"],
         )
     elif api_ehr:
@@ -226,21 +243,23 @@ def process_onc(raw_dir: Path, out_dir: Path) -> None:
         interop_lookup = extract_erx_metric(erx_rows)
 
     output: List[Dict[str, object]] = []
-    all_states = sorted(set(ehr_lookup) | set(interop_lookup))
+    all_states = sorted(set(ehr_lookup) | set(interop_lookup) | set(hie_lookup) | set(patient_access_lookup))
     for state in all_states:
         ehr_value = ehr_lookup.get(state, {}).get("value")
         ehr_year = ehr_lookup.get(state, {}).get("year", "")
         interop_value = interop_lookup.get(state, {}).get("value")
         interop_year = interop_lookup.get(state, {}).get("year", "")
-        readiness = mean([ehr_value, interop_value])
+        hie_value = hie_lookup.get(state, {}).get("value")
+        patient_access_value = patient_access_lookup.get(state, {}).get("value")
+        readiness = mean([v for v in [ehr_value, hie_value, interop_value, patient_access_value] if v is not None] or [None])
 
         output.append(
             {
                 "state": state,
                 "reporting_year": ehr_year or interop_year or "",
                 "ehr_adoption_pct": ehr_value,
-                "hie_exchange_pct": None,
-                "patient_access_pct": None,
+                "hie_exchange_pct": hie_value,
+                "patient_access_pct": patient_access_value,
                 "tefca_ready_pct": None,
                 "api_use_pct": interop_value,
                 "readiness_score": round(readiness, 1) if readiness is not None else "",

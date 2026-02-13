@@ -67,6 +67,13 @@ function setList(element, items) {
   });
 }
 
+function impactClass(impact) {
+  const level = (impact || "").toLowerCase();
+  if (level === "high") return "impact-high";
+  if (level === "medium") return "impact-medium";
+  return "impact-low";
+}
+
 function setRoles(element, roles) {
   if (!element) return;
   element.innerHTML = "";
@@ -78,7 +85,7 @@ function setRoles(element, roles) {
   }
   roles.forEach((role) => {
     const card = document.createElement("div");
-    card.className = "role-card";
+    card.className = `role-card ${impactClass(role.impact)}`;
 
     const left = document.createElement("div");
     const right = document.createElement("div");
@@ -92,7 +99,7 @@ function setRoles(element, roles) {
     why.textContent = role.why;
 
     const impact = document.createElement("div");
-    impact.className = "role-impact";
+    impact.className = `role-impact ${impactClass(role.impact)}`;
     impact.textContent = role.impact;
 
     left.appendChild(name);
@@ -103,6 +110,75 @@ function setRoles(element, roles) {
     card.appendChild(right);
     element.appendChild(card);
   });
+}
+
+const SOURCE_LABELS = {
+  onc: "ONC Health IT Dashboard",
+  cms: "CMS Medicare Advantage / Part D",
+  ruca: "USDA ERS Rural-Urban Classification",
+  census: "U.S. Census Bureau",
+};
+
+function setSources(element, sources) {
+  if (!element) return;
+  element.innerHTML = "";
+  if (!sources || !Object.keys(sources).length) {
+    const li = document.createElement("li");
+    li.textContent = "Not available";
+    element.appendChild(li);
+    return;
+  }
+  Object.entries(sources).forEach(([key, value]) => {
+    const li = document.createElement("li");
+    const label = SOURCE_LABELS[key] || key.toUpperCase();
+    li.innerHTML = `<strong>${label}</strong> &mdash; ${value}`;
+    element.appendChild(li);
+  });
+}
+
+// Scroll-based active section highlighting
+const sectionIds = [
+  "headline",
+  "digital-readiness",
+  "rural-urban",
+  "mapd-pdp",
+  "roles",
+  "preseason",
+  "stars-context",
+];
+const navLinks = document.querySelectorAll(".section-nav a");
+
+function updateActiveNav() {
+  let current = "";
+  for (const id of sectionIds) {
+    const section = document.getElementById(id);
+    if (!section) continue;
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 180) {
+      current = id;
+    }
+  }
+  navLinks.forEach((link) => {
+    if (link.getAttribute("href") === `#${current}`) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+}
+
+window.addEventListener("scroll", updateActiveNav, { passive: true });
+
+// State transition
+function fadeWall(callback) {
+  const wall = document.getElementById("wall");
+  wall.classList.add("fade-out");
+  setTimeout(() => {
+    callback();
+    wall.classList.remove("fade-out");
+    wall.classList.add("fade-in");
+    setTimeout(() => wall.classList.remove("fade-in"), 300);
+  }, 150);
 }
 
 async function loadIndex() {
@@ -155,12 +231,12 @@ async function loadState(code) {
     setList(elements.ruralConstraints, data.rural_urban?.constraints);
     setList(elements.ruralImplications, data.rural_urban?.implications);
 
-  setText(elements.mapdShare, fmtPct(data.mapd_pdp?.mapd_share_pct));
-  setText(elements.maOnlyShare, fmtPct(data.mapd_pdp?.ma_only_share_pct));
-  setText(elements.pdpShare, fmtPct(data.mapd_pdp?.pdp_share_pct));
-  setText(elements.mapdLabel, data.mapd_pdp?.label);
-  setText(elements.mapdImplications, data.mapd_pdp?.implications?.join(" "));
-  setText(elements.planMethodNote, data.mapd_pdp?.method_note, "");
+    setText(elements.mapdShare, fmtPct(data.mapd_pdp?.mapd_share_pct));
+    setText(elements.maOnlyShare, fmtPct(data.mapd_pdp?.ma_only_share_pct));
+    setText(elements.pdpShare, fmtPct(data.mapd_pdp?.pdp_share_pct));
+    setText(elements.mapdLabel, data.mapd_pdp?.label);
+    setText(elements.mapdImplications, data.mapd_pdp?.implications?.join(" "));
+    setText(elements.planMethodNote, data.mapd_pdp?.method_note, "");
 
     setText(elements.rolesSummary, data.roles_impact?.summary);
     setRoles(elements.rolesList, data.roles_impact?.roles);
@@ -176,17 +252,17 @@ async function loadState(code) {
     setText(elements.churnPct, fmtPct(data.stars_context?.churn_pct));
     setList(elements.starsNotes, data.stars_context?.notes);
 
-    const sources = data.sources || {};
-    const sourceItems = Object.keys(sources).map((key) => `${sources[key]}`);
-    setList(elements.sourceList, sourceItems);
+    setSources(elements.sourceList, data.sources || {});
     setText(elements.updatedAt, `Updated ${data.updated_at}`);
+
+    updateActiveNav();
   } catch (error) {
     setText(elements.headline, "State data not found. Run the build pipeline.");
   }
 }
 
 stateSelect.addEventListener("change", (event) => {
-  loadState(event.target.value);
+  fadeWall(() => loadState(event.target.value));
 });
 
 loadIndex();
