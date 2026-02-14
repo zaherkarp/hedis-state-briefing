@@ -16,20 +16,75 @@ Operational leaders in health systems and health plans who need a clear, state-s
 - `web/` – static wall (HTML/CSS/JS)
 - `reports/` – periodic coverage reports
 
-## Quick start (sample data)
-```bash
-python3 scripts/process.py --use-samples
-python3 scripts/build.py --date 2026-02-07
-```
-Open `web/index.html` in a static server or via your preferred dev server.
+## Initial testing (exhaustive)
+This walkthrough assumes you are starting from a clean clone with no cached outputs and
+you are running commands inside the repo root.
 
-## One-command run (uv)
-This runs fetch → process → build → coverage report:
+### 1) Use OpenSSL-linked Python (recommended)
+Homebrew Python is linked against OpenSSL and avoids the LibreSSL warning.
+Create a local virtual environment with it:
+```bash
+/opt/homebrew/bin/python3 -m venv .venv
+```
+Activate it (recommended so `python3` points to the OpenSSL build):
+```bash
+source .venv/bin/activate
+```
+
+### 2) Install dependencies
+Runtime deps:
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+Dev/test deps:
+```bash
+python3 -m pip install -r requirements-dev.txt
+```
+
+### 3) Run the sample-data pipeline (recommended first run)
+This runs fetch → process → build → coverage report → QA checks using `data/samples/raw`.
 ```bash
 uv run python scripts/run_pipeline.py --use-samples
 ```
 
-Use real data:
+If you are not using `uv`, run the steps manually:
+```bash
+python3 scripts/process.py --use-samples
+python3 scripts/build.py
+python3 scripts/coverage_report.py --top 5
+```
+
+### 4) Validate outputs
+You should now have:
+- `data/processed/*.csv` (state-level tables)
+- `data/states/<STATE>.json` and `data/states/index.json` (briefing artifacts)
+- `web/data/<STATE>.json` and `web/data/index.json` (mirrored artifacts for the UI)
+- `reports/coverage/coverage_YYYY-MM-DD.md` (coverage report)
+
+### 5) Open the wall
+Serve the `web/` directory with any static server and open `index.html`.
+```bash
+python3 -m http.server --directory web 8000
+```
+Then open `http://localhost:8000`.
+
+### 6) Run tests
+```bash
+python3 -m pytest
+```
+Expected: 1 test passing (pipeline on sample data).
+
+### 7) Interpret the coverage report
+Coverage reports summarize:
+- Top states per metric (readiness, rural %, MAPD/PDP splits, stars, volatility, enrollment).
+- Missing data coverage by metric.
+
+If the sample data is used, the report will only include the sample states (typically CA/FL/IA).
+If MA-only share is missing, it will be listed for every state. This indicates the CPSC
+plan-mix split did not populate `ma_only_share_pct`.
+
+## One-command run (real data)
 ```bash
 uv run python scripts/run_pipeline.py --allow-disabled
 ```
@@ -61,6 +116,29 @@ After `build.py`, generate a report of top states per category and missing data 
 python3 scripts/coverage_report.py --top 5
 ```
 Reports are saved to `reports/coverage/`.
+
+## QA checks (periodic)
+QA checks validate key outputs and coverage:
+```bash
+python3 scripts/qa_checks.py
+```
+Reports are saved to `reports/qa/`. To skip QA in the full pipeline, use `--skip-qa`.
+ 
+## Troubleshooting warnings
+### Homebrew shellenv warning (`/opt/homebrew/.../shellenv.sh: /bin/ps: Operation not permitted`)
+This is a macOS permission warning triggered by a login shell executing Homebrew’s `shellenv`.
+It does not affect the pipeline. To avoid it:
+- Run commands in a non-login shell in automated contexts (for example, avoid launching shells with `-l`).
+- Or remove/guard the `brew shellenv` line in your shell profile if you want to stop it globally.
+
+### urllib3 + LibreSSL warning
+If you see:
+```
+NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL ...'
+```
+This comes from system Python on macOS. The pipeline still runs, but you can silence it by:
+- Pinning `urllib3<2` in `requirements.txt` and `pyproject.toml`, or
+- Using a Python build linked against OpenSSL (for example, Homebrew Python).
 
 ## Docker
 Build the image:

@@ -1,0 +1,13 @@
+state,county,population,rural_flag
+CA,Los Angeles,10000000,0
+CA,Fresno,1000000,1
+CA,Humboldt,130000,1
+IA,Polk,500000,0
+IA,Story,100000,0
+IA,Clay,16000,1
+IA,Emmet,9000,1
+IA,Sioux,35000,1
+FL,Miami-Dade,2700000,0
+FL,Hillsborough,1500000,0
+FL,Suwannee,45000,1
+FL,Okeechobee,40000,1
