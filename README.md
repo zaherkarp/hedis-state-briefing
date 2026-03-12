@@ -140,6 +140,18 @@ This comes from system Python on macOS. The pipeline still runs, but you can sil
 - Pinning `urllib3<2` in `requirements.txt` and `pyproject.toml`, or
 - Using a Python build linked against OpenSSL (for example, Homebrew Python).
 
+
+## CI/CD (GitHub Actions)
+The repository ships with three production-focused workflows:
+- **CI (`.github/workflows/ci.yml`)**: runs matrix tests (Python 3.10 + 3.11), executes the sample end-to-end pipeline, uploads build artifacts, and smoke-tests the Docker image. It also enforces least-privilege permissions and explicit job timeouts for safer CI execution.
+- **Pages deploy (`.github/workflows/deploy-pages.yml`)**: rebuilds the static wall from sample data and publishes `web/` to GitHub Pages on `main`.
+- **Container release (`.github/workflows/release-image.yml`)**: builds and publishes a versioned image to GHCR (`ghcr.io/<org>/<repo>`) on `main` and `v*` tags, including provenance/SBOM attestations.
+
+### Enabling deployment
+1. In repository settings, enable **GitHub Pages** and select **GitHub Actions** as the source.
+2. Ensure repository permissions allow GitHub Actions to create and publish Pages deployments.
+3. Confirm package publishing is enabled for GHCR in org/repo settings if you want image publishing from private repos.
+
 ## Docker
 Build the image:
 ```bash
