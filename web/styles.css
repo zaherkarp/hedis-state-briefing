@@ -107,9 +107,15 @@ body {
   border: 1px solid transparent;
 }
 
-.section-nav a:hover {
+.section-nav a:hover,
+.section-nav a.active {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.section-nav a.active {
+  background: rgba(11, 109, 92, 0.08);
+  font-weight: 500;
 }
 
 .panel {
@@ -251,6 +257,48 @@ summary {
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
+}
+
+#wall.is-loading .panel:not(#headline) {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+#wall.has-error .panel:not(#headline) {
+  display: none;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .site-header {
+    position: static;
+    background: #fff;
+    backdrop-filter: none;
+  }
+
+  .section-nav {
+    display: none;
+  }
+
+  .controls select {
+    border: none;
+    padding: 0;
+  }
+
+  .panel {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .page {
+    max-width: 100%;
+    padding: 0 16px;
+  }
 }
 
 @media (max-width: 768px) {

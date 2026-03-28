@@ -36,6 +36,8 @@ const elements = {
   updatedAt: document.getElementById("updated-at"),
 };
 
+const wall = document.getElementById("wall");
+
 function fmtPct(value) {
   if (value === null || value === undefined || value === "") return "Not available";
   return `${Number(value).toFixed(1)}%`;
@@ -105,9 +107,58 @@ function setRoles(element, roles) {
   });
 }
 
+function showLoading() {
+  wall.classList.add("is-loading");
+  setText(elements.headline, "Loading state briefing\u2026");
+  setText(elements.subheadline, "", "");
+}
+
+function showError(message) {
+  wall.classList.remove("is-loading");
+  wall.classList.add("has-error");
+  setText(elements.headline, message);
+  setText(elements.subheadline, "", "");
+}
+
+function getStateFromHash() {
+  const hash = window.location.hash.slice(1);
+  if (/^[A-Z]{2}$/.test(hash)) return hash;
+  return null;
+}
+
+function setStateHash(code) {
+  history.replaceState(null, "", `#${code}`);
+}
+
+// Scroll-spy: highlight the nav link for the section currently in view
+const navLinks = document.querySelectorAll(".section-nav a");
+const sections = Array.from(navLinks).map((link) => {
+  const id = link.getAttribute("href").slice(1);
+  return document.getElementById(id);
+}).filter(Boolean);
+
+function updateActiveNav() {
+  const scrollY = window.scrollY + 180;
+  let activeId = null;
+  for (let i = sections.length - 1; i >= 0; i--) {
+    if (sections[i].offsetTop <= scrollY) {
+      activeId = sections[i].id;
+      break;
+    }
+  }
+  navLinks.forEach((link) => {
+    const linkId = link.getAttribute("href").slice(1);
+    link.classList.toggle("active", linkId === activeId);
+  });
+}
+
+window.addEventListener("scroll", updateActiveNav, { passive: true });
+
 async function loadIndex() {
   try {
+    showLoading();
     const response = await fetch("data/index.json");
+    if (!response.ok) throw new Error("Index not found");
     const payload = await response.json();
 
     stateSelect.innerHTML = "";
@@ -120,21 +171,32 @@ async function loadIndex() {
         stateSelect.appendChild(option);
       });
 
-    if (payload.states.length) {
-      stateSelect.value = payload.states[0].code;
-      await loadState(payload.states[0].code);
+    const hashState = getStateFromHash();
+    const validCodes = payload.states.map((s) => s.code);
+    const initialState = hashState && validCodes.includes(hashState)
+      ? hashState
+      : payload.states.length ? payload.states[0].code : null;
+
+    if (initialState) {
+      stateSelect.value = initialState;
+      await loadState(initialState);
     }
 
     setText(elements.updatedAt, `Updated ${payload.updated_at}`);
   } catch (error) {
-    setText(elements.headline, "State data not found. Run the build pipeline.");
+    showError("State data not found. Run the build pipeline.");
   }
 }
 
 async function loadState(code) {
   try {
+    showLoading();
     const response = await fetch(`data/states/${code}.json`);
+    if (!response.ok) throw new Error(`State ${code} not found`);
     const data = await response.json();
+
+    wall.classList.remove("is-loading", "has-error");
+    setStateHash(code);
 
     setText(elements.headline, data.summary?.headline);
     setText(elements.subheadline, data.summary?.subheadline);
@@ -155,12 +217,12 @@ async function loadState(code) {
     setList(elements.ruralConstraints, data.rural_urban?.constraints);
     setList(elements.ruralImplications, data.rural_urban?.implications);
 
-  setText(elements.mapdShare, fmtPct(data.mapd_pdp?.mapd_share_pct));
-  setText(elements.maOnlyShare, fmtPct(data.mapd_pdp?.ma_only_share_pct));
-  setText(elements.pdpShare, fmtPct(data.mapd_pdp?.pdp_share_pct));
-  setText(elements.mapdLabel, data.mapd_pdp?.label);
-  setText(elements.mapdImplications, data.mapd_pdp?.implications?.join(" "));
-  setText(elements.planMethodNote, data.mapd_pdp?.method_note, "");
+    setText(elements.mapdShare, fmtPct(data.mapd_pdp?.mapd_share_pct));
+    setText(elements.maOnlyShare, fmtPct(data.mapd_pdp?.ma_only_share_pct));
+    setText(elements.pdpShare, fmtPct(data.mapd_pdp?.pdp_share_pct));
+    setText(elements.mapdLabel, data.mapd_pdp?.label);
+    setText(elements.mapdImplications, data.mapd_pdp?.implications?.join(" "));
+    setText(elements.planMethodNote, data.mapd_pdp?.method_note, "");
 
     setText(elements.rolesSummary, data.roles_impact?.summary);
     setRoles(elements.rolesList, data.roles_impact?.roles);
@@ -181,12 +243,20 @@ async function loadState(code) {
     setList(elements.sourceList, sourceItems);
     setText(elements.updatedAt, `Updated ${data.updated_at}`);
   } catch (error) {
-    setText(elements.headline, "State data not found. Run the build pipeline.");
+    showError(`Could not load briefing for ${code}.`);
   }
 }
 
 stateSelect.addEventListener("change", (event) => {
   loadState(event.target.value);
+});
+
+window.addEventListener("hashchange", () => {
+  const code = getStateFromHash();
+  if (code && code !== stateSelect.value) {
+    stateSelect.value = code;
+    loadState(code);
+  }
 });
 
 loadIndex();
